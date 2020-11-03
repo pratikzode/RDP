@@ -1,0 +1,91 @@
+/*
+S->a|+|(T)
+T->SU
+U->,SU
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+void S();
+void T();
+void U();
+char str[10],ch;
+int i=0;
+int flag=0;
+
+int main()
+{
+  printf("\nEnter string ending with $:");
+  gets(str);
+  printf("\nEntered String:%s",str);
+  S();
+  if(str[i]=='$' && flag==0)
+     printf("\nString Accepted..!\n");
+  else
+     printf("\nString Rejected..!\n");
+  
+  return 0;
+}//main
+
+void S()
+{
+	int flag1=0;
+  	if(str[i]=='a')
+   {  
+    i++;
+    printf("\nUsed S->a");
+   }//if
+   else 
+   {
+   	printf("\nUsed S->a");
+   	printf("\nBacktracked!!\n");	 
+  	flag1=1;
+  }
+  if(str[i]=='+' && flag1==1)
+    {
+    i++;
+    flag1=0;
+    printf("\nUsed S->+");
+    }
+    else if(flag1==1)
+    {
+	printf("\nUsed S->+");
+    	printf("\nBacktracked!!\n");
+    }
+  if(str[i]=='(' && flag1==1 )
+   {
+     i++;
+     T();
+     if(str[i]==')')
+      {
+       printf("\nUsed S->(T)");
+       i++;
+      }
+     else
+     {
+        flag=1;    
+   	}
+   }//elseif    
+}//S
+
+void U()
+{
+
+  if(str[i]==',')
+    {
+      i++;
+      printf("\nUsed U->,");
+      S();
+      U();
+    }
+    else
+    	printf("\nBacktracked!!\n");
+}//S
+
+void T()
+{
+  S();
+  U();
+}//S
+
+Run:(a,a)$
